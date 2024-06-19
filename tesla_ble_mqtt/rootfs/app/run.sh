@@ -94,21 +94,36 @@ send_key() {
  done
 }
 
-listen_to_ble() {
- bashio::log.info "Listening to BLE for presence"
- PRESENCE_TIMEOUT=5
- set +e
- bluetoothctl --timeout $PRESENCE_TIMEOUT scan on | grep $BLE_SC_NAME
- EXIT_STATUS=$?
- set -e
- if [ $EXIT_STATUS -eq 0 ]; then
-   bashio::log.info "$BLE_SC_NAME presence detected"
-   mosquitto_pub --nodelay -h $MQTT_IP -p $MQTT_PORT -u "$MQTT_USER" -P "$MQTT_PWD" -t tesla_ble/binary_sensor/presence -m ON
- else
-   bashio::log.notice "$BLE_SC_NAME presence not detected or issue in command"
-   mosquitto_pub --nodelay -h $MQTT_IP -p $MQTT_PORT -u "$MQTT_USER" -P "$MQTT_PWD" -t tesla_ble/binary_sensor/presence -m OFF
- fi
 
+listen_to_ble() {
+  # Initial values
+  : PRESENCE_BINARY_SENSOR=${PRESENCE_BINARY_SENSOR:=unavailable}
+  : PRESENCE_TIMEOUT=${PRESENCE_TIMEOUT:=5}
+
+  bashio::log.info "Listening to BLE for presence"
+  set +e
+  bluetoothctl --timeout $PRESENCE_TIMEOUT scan on | grep $BLE_SC_NAME
+  EXIT_STATUS=$?
+  set -e
+  if [ $EXIT_STATUS -eq 0 ]; then
+    bashio::log.info "$BLE_SC_NAME presence detected"
+    if [[ $PRESENCE_BINARY_SENSOR == "OFF" || $PRESENCE_BINARY_SENSOR == "unavailable" ]]; then
+      bashio::log.info "Updating topic tesla_ble/binary_sensor/presence ON"
+      mosquitto_pub --nodelay -h $MQTT_IP -p $MQTT_PORT -u "$MQTT_USER" -P "$MQTT_PWD" -t tesla_ble/binary_sensor/presence -m ON
+      PRESENCE_BINARY_SENSOR=ON
+    else
+      bashio::log.debug "Topic tesla_ble/binary_sensor/presence already ON"
+    fi
+  else
+    bashio::log.warning "$BLE_SC_NAME presence not detected or issue in command, will retry later"
+    if [[ $PRESENCE_BINARY_SENSOR == "ON" || $PRESENCE_BINARY_SENSOR == "unavailable" ]]; then
+      bashio::log.info "Updating topic tesla_ble/binary_sensor/presence OFF"
+      mosquitto_pub --nodelay -h $MQTT_IP -p $MQTT_PORT -u "$MQTT_USER" -P "$MQTT_PWD" -t tesla_ble/binary_sensor/presence -m OFF
+      PRESENCE_BINARY_SENSOR=OFF
+    else
+      bashio::log.debug "Topic tesla_ble/binary_sensor/presence already OFF"
+    fi
+  fi
 }
 
 
