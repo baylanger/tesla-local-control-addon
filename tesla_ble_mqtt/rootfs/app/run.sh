@@ -10,7 +10,7 @@ if [ -n "${HASSIO_TOKEN:-}" ]; then
   MQTT_PORT="$(bashio::config 'mqtt_port')"; export MQTT_PORT
   MQTT_USER="$(bashio::config 'mqtt_user')"; export MQTT_USER
   MQTT_PWD="$(bashio::config 'mqtt_pwd')"; export MQTT_PWD
-  SEND_CMD_RETRY_DELAY="$(bashio::config 'send_cmd_retry_delay')"; export SEND_CMD_RETRY_DELAY
+  TESLA_CTRL_RETRY_DELAY="$(bashio::config 'send_cmd_retry_delay')"; export TESLA_CTRL_RETRY_DELAY
   DEBUG="$(bashio::config 'debug')"; export DEBUG
 else
   NOCOLOR='\033[0m'
@@ -47,7 +47,7 @@ bashio::log.green "Configuration Options are:
   MQTT_PORT=$MQTT_PORT
   MQTT_USER=$MQTT_USER
   MQTT_PWD=Not Shown
-  SEND_CMD_RETRY_DELAY=$SEND_CMD_RETRY_DELAY
+  TESLA_CTRL_RETRY_DELAY=$TESLA_CTRL_RETRY_DELAY
   DEBUG=$DEBUG"
 
 if [ ! -d /share/tesla_ble_mqtt ]
@@ -70,8 +70,8 @@ send_command() {
     bashio::log.info "tesla-control send command succeeded"
     break
   else
-    bashio::log.error "tesla-control send command failed exit status $EXIT_STATUS. Retrying in $SEND_CMD_RETRY_DELAY"
-    sleep $SEND_CMD_RETRY_DELAY
+    bashio::log.error "tesla-control send command failed exit status $EXIT_STATUS. Retrying in $TESLA_CTRL_RETRY_DELAY"
+    sleep $TESLA_CTRL_RETRY_DELAY
   fi
  done
 }
@@ -87,8 +87,8 @@ send_key() {
     bashio::log.notice "KEY SENT TO VEHICLE: PLEASE CHECK YOU TESLA'S SCREEN AND ACCEPT WITH YOUR CARD"
     break
   else
-    bashio::log.error "tesla-control could not send the pubkey; make sure the car is awake and sufficiently close to the bluetooth device. Retrying in $SEND_CMD_RETRY_DELAY"
-    sleep $SEND_CMD_RETRY_DELAY
+    bashio::log.error "tesla-control could not send the pubkey; make sure the car is awake and sufficiently close to the bluetooth device. Retrying in $TESLA_CTRL_RETRY_DELAY"
+    sleep $TESLA_CTRL_RETRY_DELAY
   fi
  done
 }

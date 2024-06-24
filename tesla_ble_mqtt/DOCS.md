@@ -21,7 +21,7 @@ You will need to provide:
 - MQTT_PORT
 - MQTT_USER
 - MQTT_PWD
-- SEND_CMD_RETRY_DELAY: delay between retries in case BLE fails. Use 5 by default
+- TESLA_CTRL_RETRY_DELAY: delay between retries in case BLE fails. Use 5 by default
 
 
 ## 1.2 For the standalone version

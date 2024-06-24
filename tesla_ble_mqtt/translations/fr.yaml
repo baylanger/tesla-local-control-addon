@@ -20,6 +20,6 @@ configuration:
   debug:
     name: Journalisation du débogage
     description: Imprimer des messages détaillés dans le journal pour le débogage
-  send_cmd_retry_delay:
+  tesla_ctrl_retry_delay:
     name: Délai pour re-essayer une commande
     description: Délai pour re-essayer d'envoyer une command au véhicule via BLE
