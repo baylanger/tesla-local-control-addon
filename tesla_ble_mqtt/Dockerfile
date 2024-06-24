@@ -16,10 +16,14 @@ COPY --from=builder /root/go/bin/tesla-control /usr/bin/
 
 # install dependencies
 RUN apk add --no-cache \
-  openssl \
   bluez \
+  bluez-deprecated \
+  expect \
   mosquitto-clients \
-  python3
+  openssl \
+  python3 \
+  sed \
+  vim
 
 # Python 3 HTTP Server serves the current working dir
 WORKDIR /data
