@@ -2,14 +2,14 @@
 
 # Note: in case you get "permission denied" on docker commands: see: https://stackoverflow.com/questions/48957195/how-to-fix-docker-got-permission-denied-issue
 # fill these values according to your settings #############
-TESLA_VIN=""
+VIN_LIST=""
+BLE_PRESENCE_ENABLE=true
 MQTT_IP=127.0.0.1
 MQTT_PORT=1883
 MQTT_USER=""
 MQTT_PWD=""
 TESLA_CTRL_RETRY_DELAY=5
-BLE_MAC=00:00:00:00:00:00
-DEBUG="false"
+DEBUG=false
 ############################################################
 
 
@@ -36,21 +36,21 @@ echo "Create docker structure..."
 docker volume create tesla_ble_mqtt
 
 echo "Start main docker container with configuration Options:
-  TESLA_VIN=$TESLA_VIN
+  VIN_LIST=$VIN_LIST
+  BLE_PRESENCE_ENABLE=$BLE_PRESENCE_ENABLE
   MQTT_IP=$MQTT_IP
   MQTT_PORT=$MQTT_PORT
   MQTT_USER=$MQTT_USER
   MQTT_PWD=Not Shown
   TESLA_CTRL_RETRY_DELAY=$TESLA_CTRL_RETRY_DELAY
-  BLE_MAC=$BLE_MAC
   DEBUG=$DEBUG"
 
 docker-compose up -d \
   -e TESLA_VIN=$TESLA_VIN \
+  -e BLE_PRESENCE_ENABLE=$BLE_PRESENCE_ENABLE \
   -e MQTT_IP=$MQTT_IP \
   -e MQTT_PORT=$MQTT_PORT \
   -e MQTT_USER=$MQTT_USER \
   -e MQTT_PWD=$MQTT_PWD \
   -e TESLA_CTRL_RETRY_DELAY=$TESLA_CTRL_RETRY_DELAY \
-  -e BLE_MAC=$BLE_MAC \
   -e DEBUG=$DEBUG

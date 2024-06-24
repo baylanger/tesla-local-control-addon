@@ -1,4 +1,10 @@
 configuration:
+  vin_list:
+    name: Un NIV ou plusieurs séparés par un espace; NIV affiché dans l'application Tesla
+    description: Ex. Simple 5YJ3E1EB6JF111222; Multiple 5YJ3E1EB6JF111222 5YJ3E1EB6JF333444
+  ble_presence_enable:
+    name: Détection de présence de véhicule par proximitée BLE
+    description: Contrôle de la détection de présence par proximité basé sur BLE
   mqtt_ip:
     name: MQTT Serveur
     description: Adresse IP or Hostname pour le serveur MQTT
@@ -11,12 +17,6 @@ configuration:
   mqtt_pwd:
     name: Mot de passe MQTT
     description: Mot de passe de l'utilisateur MQTT
-  vin:
-    name: NIV du véhicule
-    description: Numéro d'Identification de Véhicule affiché dans l'application Tesla
-  ble_mac:
-    name: BLE MAC (optionnel pour détection de proximité)
-    description: BLE MAC (S___________C) du véhicule; Utiliser Android "BLE scanner" ou iOS "nRF Connect"
   debug:
     name: Journalisation du débogage
     description: Imprimer des messages détaillés dans le journal pour le débogage

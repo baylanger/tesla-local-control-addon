@@ -4,8 +4,8 @@
 
 # read options in case of HA addon. Otherwise, they will be sent as environment variables
 if [ -n "${HASSIO_TOKEN:-}" ]; then
-  TESLA_VIN="$(bashio::config 'vin')"; export TESLA_VIN
-  BLE_MAC="$(bashio::config 'ble_mac')"; export BLE_MAC
+  VIN_LIST="$(bashio::config 'vin')"; export VIN_LIST
+  BLE_PRESENCE_ENABLE="$(bashio::config 'ble_presence_enable')"; export BLE_PRESENCE_ENABLE
   MQTT_IP="$(bashio::config 'mqtt_ip')"; export MQTT_IP
   MQTT_PORT="$(bashio::config 'mqtt_port')"; export MQTT_PORT
   MQTT_USER="$(bashio::config 'mqtt_user')"; export MQTT_USER
@@ -41,8 +41,8 @@ bashio::log.cyan "Inspiration by Raphael Murray https://github.com/raphmur"
 bashio::log.cyan "Instructions by Shankar Kumarasamy https://shankarkumarasamy.blog/2024/01/28/tesla-developer-api-guide-ble-key-pair-auth-and-vehicle-commands-part-3"
 
 bashio::log.green "Configuration Options are:
-  TESLA_VIN=$TESLA_VIN
-  BLE_MAC=$BLE_MAC
+  VIN_LIST=$VIN_LIST
+  BLE_PRESENCE_ENABLE=$BLE_PRESENCE_ENABLE
   MQTT_IP=$MQTT_IP
   MQTT_PORT=$MQTT_PORT
   MQTT_USER=$MQTT_USER
@@ -93,18 +93,19 @@ send_key() {
  done
 }
 
+##### TODO : REDO || KILL THIS FUNCTON
 listen_to_ble() {
  bashio::log.info "Listening to BLE for presence"
  PRESENCE_TIMEOUT=5
  set +e
- bluetoothctl --timeout $PRESENCE_TIMEOUT scan on | grep $BLE_MAC
+ bluetoothctl --timeout $PRESENCE_TIMEOUT scan on
  EXIT_STATUS=$?
  set -e
  if [ $EXIT_STATUS -eq 0 ]; then
-   bashio::log.info "$BLE_MAC presence detected"
+   bashio::log.info "presence detected"
    mosquitto_pub --nodelay -h $MQTT_IP -p $MQTT_PORT -u "$MQTT_USER" -P "$MQTT_PWD" -t tesla_ble/binary_sensor/presence -m ON
  else
-   bashio::log.notice "$BLE_MAC presence not detected or issue in command"
+   bashio::log.notice "presence not detected or issue in command"
    mosquitto_pub --nodelay -h $MQTT_IP -p $MQTT_PORT -u "$MQTT_USER" -P "$MQTT_PWD" -t tesla_ble/binary_sensor/presence -m OFF
  fi
 

@@ -15,13 +15,13 @@ If you have already created a key pair that you want to reuse, place the private
 
 
 You will need to provide:
-- TESLA_VIN (car VIN)
-- BLE_MAC: Used for proximity discovery. Tesla's BLE MAC starts with "S" and ends with "C". To find the address, use "BLE scanner" on Android or "nRF Connect" on iOS.
-- MQTT_IP: ip of your MQTT server
-- MQTT_PORT
-- MQTT_USER
-- MQTT_PWD
-- TESLA_CTRL_RETRY_DELAY: delay between retries in case BLE fails. Use 5 by default
+- VIN_LIST              : VIN single or multiple separated by a space; Default track all Tesla
+- BLE_PRESENCE_ENABLE   : Enable or disable vehicle presence sensor using Bluetooth Low Energy
+- MQTT_IP               : Hostname or IP of your MQTT server; Default 127.0.0.1
+- MQTT_PORT             : MQTT service port; Default 1883
+- MQTT_USER             : MQTT Username; Default anonymous
+- MQTT_PWD              : MQTT Password
+- TESLA_CTRL_RETRY_DELAY: Delay to retry sending a command to the vehicle over BLE; Default 5
 
 
 ## 1.2 For the standalone version
