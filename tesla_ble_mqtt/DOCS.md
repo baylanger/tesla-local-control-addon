@@ -11,17 +11,17 @@ If you have already created a key pair that you want to reuse, place the private
 
 ## 1.1 HA Add-on: install below and configure
 
-[![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https://github.com/raphmur/tesla-local-control-addon)
+[![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https://github.com/tesla-local-control/tesla-local-control-addon)
 
 
 You will need to provide:
-- VIN_LIST              : VIN single or multiple separated by a space; Default track all Tesla
-- BLE_PRESENCE_ENABLE   : Enable or disable vehicle presence sensor using Bluetooth Low Energy
-- MQTT_IP               : Hostname or IP of your MQTT server; Default 127.0.0.1
-- MQTT_PORT             : MQTT service port; Default 1883
-- MQTT_USER             : MQTT Username; Default anonymous
-- MQTT_PWD              : MQTT Password
-- TESLA_CTRL_RETRY_DELAY: Delay to retry sending a command to the vehicle over BLE; Default 5
+- VIN_LIST                  : VIN single or multiple separated by a space (required)
+- BLE_PRESENCE_DETECTION_TTL: TTL in seconds when car is considered gone; 0 to disable detection
+- MQTT_IP                   : Hostname or IP of your MQTT server; Default 127.0.0.1
+- MQTT_PORT                 : MQTT service port; Default 1883
+- MQTT_USER                 : MQTT Username; Default anonymous
+- MQTT_PWD                  : MQTT Password
+- TESLA_CMD_RETRY_DELAY     : Delay to retry sending a command to the car over BLE; Default 5
 
 
 ## 1.2 For the standalone version

@@ -2,9 +2,9 @@ configuration:
   vin_list:
     name: Un NIV ou plusieurs séparés par un espace; NIV affiché dans l'application Tesla
     description: Ex. Simple 5YJ3E1EB6JF111222; Multiple 5YJ3E1EB6JF111222 5YJ3E1EB6JF333444
-  ble_presence_enable:
-    name: Détection de présence de véhicule par proximitée BLE
-    description: Contrôle de la détection de présence par proximité basé sur BLE
+  ble_presence_detection_ttl:
+    name: TTL pour la détection de présence de véhicule par proximitée BLE
+    description: TTL en secondes pour véhicule non présent; Utiliser 0 pour désactivé la détection
   mqtt_ip:
     name: MQTT Serveur
     description: Adresse IP or Hostname pour le serveur MQTT
@@ -20,6 +20,6 @@ configuration:
   debug:
     name: Journalisation du débogage
     description: Imprimer des messages détaillés dans le journal pour le débogage
-  tesla_ctrl_retry_delay:
+  tesla_cmd_retry_delay:
     name: Délai pour re-essayer une commande
     description: Délai pour re-essayer d'envoyer une command au véhicule via BLE

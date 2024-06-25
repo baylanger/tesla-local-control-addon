@@ -2,9 +2,9 @@ configuration:
   vin_list:
     name: Single VIN or multiple separated by a space; VIN Found in Tesla app
     description: Single 5YJ3E1EB6JF111222; Multiple 5YJ3E1EB6JF111222 5YJ3E1EB6JF333444
-  ble_presence_enable:
-    name: BLE proximity presence detection of your vehicule(s)
-    description: Controls if BLE proximity presence is enable or not
+  ble_presence_detection_ttl:
+    name: BLE proximity presence detection TTL
+    description: TTL in seconds when car is considered gone; Use 0 to disable detection
   mqtt_ip:
     name: MQTT Server
     description: MQTT Server's IP address or valid Hostname
@@ -20,6 +20,6 @@ configuration:
   debug:
     name: Debug Logging
     description: Print verbose messages to the log for debugging
-  tesla_ctrl_retry_delay:
+  tesla_cmd_retry_delay:
     name: Delay to retry sending a command to your car
     description: Delay to retry sending a command to the vehicle over BLE
