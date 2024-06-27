@@ -1,0 +1,34 @@
+#!/bin/bash
+
+protected_branch='main'
+current_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
+
+
+### Check versions
+#
+REPO_ROOT_PATH=$( cd $(git rev-parse --show-cdup); pwd)
+changelog_version=$(egrep '## [0-9]\d*(\.[0-9]\d*)*$' $REPO_ROOT_PATH/tesla_ble_mqtt/CHANGELOG.md | head -1 | cut -d ' ' -f2)
+addon_config_version=$(grep ^version $REPO_ROOT_PATH/tesla_ble_mqtt/config.yaml|awk -F\" '{print $2}')
+mqtt_software_version=$(grep sw_version $REPO_ROOT_PATH/tesla_ble_mqtt/rootfs/app/discovery.sh|awk -F\" '{print $4}')
+
+if [ "$changelog_version" != addon_config_version \
+  || "$changelog_version" != "$mqtt_software_version" ]; then
+  echo "Please adjust all versions to be identical:"
+  echo "changelog_version: $changelog_version tesla_ble_mqtt/CHANGELOG.md"
+  echo "addon_config_version: $addon_config_version tesla_ble_mqtt/config.yaml"
+  echo "mqtt_software_version: $mqtt_software_version tesla_ble_mqtt/rootfs/app/discovery.sh"
+  exit 1
+fi
+### END Check versions
+
+
+if [ $protected_branch = $current_branch ]; then
+  read -p "You're about to push to $protected_branch, are you sure? (y/n) " -n 1 -r < /dev/tty
+  echo
+  if echo $REPLY | grep -E '^[Yy]$' > /dev/null; then
+    exit 0 # push will execute
+  fi
+  exit 1 # push will not execute
+else
+  exit 0 # push will execute
+fi
