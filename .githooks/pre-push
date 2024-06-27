@@ -6,12 +6,12 @@ current_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
 
 ### Check versions
 #
-REPO_ROOT_PATH=$( cd $(git rev-parse --show-cdup); pwd)
+REPO_ROOT_PATH=$(git rev-parse --show-toplevel)
 changelog_version=$(egrep '## [0-9]\d*(\.[0-9]\d*)*$' $REPO_ROOT_PATH/tesla_ble_mqtt/CHANGELOG.md | head -1 | cut -d ' ' -f2)
 addon_config_version=$(grep ^version $REPO_ROOT_PATH/tesla_ble_mqtt/config.yaml|awk -F\" '{print $2}')
 mqtt_software_version=$(grep sw_version $REPO_ROOT_PATH/tesla_ble_mqtt/rootfs/app/discovery.sh|awk -F\" '{print $4}')
 
-if [ "$changelog_version" != addon_config_version \
+if [ "$changelog_version" != "$addon_config_version" \
   || "$changelog_version" != "$mqtt_software_version" ]; then
   echo "Please adjust all versions to be identical:"
   echo "changelog_version: $changelog_version tesla_ble_mqtt/CHANGELOG.md"
