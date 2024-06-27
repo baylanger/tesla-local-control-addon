@@ -48,7 +48,7 @@ IFS="$SAVEIFS"
 #
 if [ $protected_branch = $current_branch ]; then
   echo "You should not commit to $protected_branch!"
-  echo 'To bypass the protection, add to the git commit command "--no-verify"'
+  echo 'If you still want to proceed add "--no-verify" to your git commit'
   exit 1 # push will not execute
 fi
 ### END Prevent commit on main branch
