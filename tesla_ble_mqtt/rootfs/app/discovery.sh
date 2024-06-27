@@ -2,9 +2,9 @@
 
 setup_auto_discovery() {
 
- mosquitto_pub -h $MQTT_IP -p $MQTT_PORT -u "$MQTT_USER" -P "$MQTT_PWD" -t homeassistant/binary_sensor/tesla_ble/presence/config -m \
+         mosquitto_pub -h $MQTT_IP -p $MQTT_PORT -u "$MQTT_USER" -P "$MQTT_PWD" -t homeassistant/binary_sensor/tesla_ble/presence/config -m \
   '{
-   "state_topic": "tesla_ble/binary_sensor/presence",
+           "state_topic": "tesla_ble/binary_sensor/presence",
    "device": {
     "identifiers": ["tesla_ble_mqtt"],
     "manufacturer": "tesla_ble_mqtt",
@@ -13,7 +13,7 @@ setup_auto_discovery() {
    },
    "device_class": "presence",
    "name": "Presence",
-   "unique_id": "tesla_ble_presence"
+   "unique_id":         "tesla_ble_presence"
   }'
 
  mosquitto_pub -h $MQTT_IP -p $MQTT_PORT -u "$MQTT_USER" -P "$MQTT_PWD" -t homeassistant/button/tesla_ble/generate_keys/config -m \
