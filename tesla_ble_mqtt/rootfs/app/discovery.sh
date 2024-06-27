@@ -1,5 +1,5 @@
-#!/bin/ash
-
+#!/bin/ash		
+   
 setup_auto_discovery() {
 
          mosquitto_pub -h $MQTT_IP -p $MQTT_PORT -u "$MQTT_USER" -P "$MQTT_PWD" -t homeassistant/binary_sensor/tesla_ble/presence/config -m \
