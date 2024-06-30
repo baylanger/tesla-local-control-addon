@@ -1,0 +1,6 @@
+mkdir ble-presence
+cd ble-presence
+go mod init ble-presence
+go get github.com/google/goexpect
+vi ble-presence.go
+go build -o ble-presence ble-presence.go
